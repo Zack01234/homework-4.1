@@ -1,12 +1,11 @@
-package school.controller;
+package ru.hogwarts.school.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import school.entity.Faculty;
-import school.entity.Student;
-import school.service.StudentService;
-
+import ru.hogwarts.school.entity.Faculty;
+import ru.hogwarts.school.entity.Student;
+import ru.hogwarts.school.service.StudentService;
 import java.util.Collection;
 
 @RestController
@@ -38,6 +37,21 @@ public class StudentController {
             return ResponseEntity.ok(studentService.findByAgeBetween(min, max));
         }
         return ResponseEntity.ok(studentService.findAllStudents());
+    }
+
+    @GetMapping("/students-count")
+    public Long getStudentsCount() {
+        return studentService.getStudentsCount();
+    }
+
+    @GetMapping("/students-age-avg")
+    public Long getStudentsAgeAvg() {
+        return studentService.getStudentsAgeAvg();
+    }
+
+    @GetMapping("/get-last-five-students")
+    public ResponseEntity<Collection<Student>> getLastTenStudents() {
+        return ResponseEntity.ok(studentService.getLastTenStudents());
     }
 
     @PostMapping

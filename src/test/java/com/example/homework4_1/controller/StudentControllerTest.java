@@ -8,64 +8,51 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
-import school.controller.StudentController;
-import school.entity.Student;
+import ru.hogwarts.school.controller.StudentController;
+import ru.hogwarts.school.entity.Student;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class StudentControllerTest {
     @LocalServerPort
     private int port;
-
     @Autowired
     private StudentController studentController;
-
     @Autowired
     private TestRestTemplate restTemplate;
-
     @Test
     public void contextLoads() {
-        Assertions
-                .assertThat(studentController)
-                .isNotNull();
-        Assertions
-                .assertThat(this.restTemplate)
-                .isNotNull();
+        Assertions.assertThat(studentController).isNotNull();
+        Assertions.assertThat(this.restTemplate).isNotNull();
     }
 
     @Test
     public void addStudent() {
-        final String name = "JoJo";
-
+        final String name = "Lenin";
         Student student = new Student();
         student.setName(name);
-
         Assertions.assertThat(restTemplate.postForEntity("http://localhost:" + port + "/student", student, String.class))
                 .isNotNull();
     }
 
     @Test
     public void getStudentById() {
-        Assertions
-                .assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/student/" + 1, String.class))
+        Assertions.assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/student/" + 1, String.class))
                 .isNotNull();
     }
 
     @Test
     public void getAllStudentsByAge() {
-        Assertions
-                .assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/student", String.class))
+        Assertions.assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/student", String.class))
                 .isNotNull();
     }
 
     @Test
     public void editStudent() {
         final long id = 1L;
-        final String name = "Jonathan";
-
+        final String name = "Grib";
         Student student = new Student();
         student.setId(id);
         student.setName(name);
-
         HttpEntity<Student> entity = new HttpEntity<>(student);
 
         Assertions.assertThat(this.restTemplate.exchange("http://localhost:" + port + "/student/", HttpMethod.PUT, entity, String.class)).isNotNull();
@@ -74,9 +61,7 @@ public class StudentControllerTest {
     @Test
     public void getStudentsFacultyByStudentsId() {
         final long id = 1L;
-
-        Assertions.assertThat(this.restTemplate
-                        .getForObject("http://localhost:" + port + "/student/" + id + "/faculty", String.class))
+        Assertions.assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/student/" + id + "/faculty", String.class))
                 .isNotNull();
     }
 
@@ -84,9 +69,7 @@ public class StudentControllerTest {
     public void deleteStudent() {
         final long id = 1L;
         HttpEntity<Student> entity = new HttpEntity<>(new Student());
-
-        Assertions.assertThat(this.restTemplate
-                        .exchange("http://localhost:" + port + "/student/" + id, HttpMethod.DELETE, entity, String.class))
+        Assertions.assertThat(this.restTemplate.exchange("http://localhost:" + port + "/student/" + id, HttpMethod.DELETE, entity, String.class))
                 .isNotNull();
     }
 }

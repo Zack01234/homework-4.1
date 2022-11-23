@@ -1,4 +1,4 @@
-package school.controller;
+package ru.hogwarts.school.controller;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -6,8 +6,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import school.entity.Avatar;
-import school.service.AvatarService;
+import ru.hogwarts.school.service.AvatarService;
+import ru.hogwarts.school.entity.Avatar;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,7 +26,7 @@ public class AvatarController {
 
     @PostMapping(value = "/{studentId}/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> uploadAvatar(@PathVariable Long studentId,
-                                               @RequestParam MultipartFile avatar) throws IOException, IOException {
+                                               @RequestParam MultipartFile avatar) throws IOException {
         avatarService.uploadAvatar(studentId, avatar);
         return ResponseEntity.ok().build();
     }
@@ -50,8 +50,8 @@ public class AvatarController {
     public void downloadAvatar(@PathVariable Long Id, HttpServletResponse response) throws IOException {
         Avatar avatar = avatarService.findAvatar(Id);
         Path path = Path.of(avatar.getFilePath());
-        try (InputStream is = Files.newInputStream(path);
-             OutputStream os = response.getOutputStream()) {
+        try(InputStream is = Files.newInputStream(path);
+            OutputStream os = response.getOutputStream()) {
             response.setStatus(200);
             response.setContentType(avatar.getMediaType());
             response.setContentLength((int) avatar.getFileSize());

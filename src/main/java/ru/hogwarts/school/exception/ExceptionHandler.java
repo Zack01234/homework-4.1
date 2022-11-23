@@ -1,4 +1,4 @@
-package school.exception;
+package ru.hogwarts.school.exception;
 
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;

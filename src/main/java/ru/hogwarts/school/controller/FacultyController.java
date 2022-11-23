@@ -1,12 +1,11 @@
-package school.controller;
+package ru.hogwarts.school.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import school.entity.Faculty;
-import school.entity.Student;
-import school.service.FacultyService;
-
+import ru.hogwarts.school.entity.Faculty;
+import ru.hogwarts.school.entity.Student;
+import ru.hogwarts.school.service.FacultyService;
 import java.util.Collection;
 
 @RestController
@@ -28,10 +27,13 @@ public class FacultyController {
     }
 
     @GetMapping
-    public ResponseEntity<Collection<Faculty>> getAllFacultiesByColor(@RequestParam(required = false) String color,
-                                                                      @RequestParam(required = false) String name) {
-        if ((color != null && !color.isBlank()) || (name != null && !name.isBlank())) {
-            return ResponseEntity.ok(facultyService.getAllFacultiesByColorOrName(color, name));
+    public ResponseEntity<Collection<Faculty>> getAllFacultiesByColor(@RequestParam(required = false) String name,
+                                                                      @RequestParam(required = false) String color) {
+        if (name != null && !name.isBlank()) {
+            return ResponseEntity.ok(facultyService.getAllFacultiesByColorOrName(name, null));
+        }
+        if (color != null && !color.isBlank()) {
+            return ResponseEntity.ok(facultyService.getAllFacultiesByColorOrName(null, color));
         }
         return ResponseEntity.ok(facultyService.findAllFaculties());
     }
@@ -57,8 +59,7 @@ public class FacultyController {
     }
 
     @GetMapping("{id}/students/")
-    public ResponseEntity<Collection<Student>> getAllStudentsId(@PathVariable Long id) {
+    public ResponseEntity<Collection<Student>> getAllStudentsOnFacultyById(@PathVariable Long id) {
         return ResponseEntity.ok(facultyService.getAllStudentsById(id));
     }
-
 }

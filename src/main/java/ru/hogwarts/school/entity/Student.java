@@ -1,4 +1,4 @@
-package school.entity;
+package ru.hogwarts.school.entity;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -21,7 +21,6 @@ public class Student {
     }
 
     public Student() {
-
     }
 
     public Long getId() {
@@ -71,10 +70,10 @@ public class Student {
 
     @Override
     public String toString() {
-        return "Student{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", age=" + age +
-                '}';
+        return "Студент " +
+                "с id =" + id +
+                ", имеет имя " + name + '\'' +
+                ", и возраст " + age +
+                " лет.";
     }
 }

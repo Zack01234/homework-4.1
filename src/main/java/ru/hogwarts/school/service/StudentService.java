@@ -1,20 +1,21 @@
-package school.service;
+package ru.hogwarts.school.service;
 
 import org.springframework.stereotype.Service;
-import school.entity.Faculty;
-import school.entity.Student;
-import school.repository.FacultyRepository;
-import school.repository.StudentRepository;
-
+import ru.hogwarts.school.entity.Faculty;
+import ru.hogwarts.school.entity.Student;
+import ru.hogwarts.school.repository.FacultyRepository;
+import ru.hogwarts.school.repository.StudentRepository;
 import java.util.Collection;
 
 @Service
 public class StudentService {
     private final StudentRepository studentRepository;
-//    private final FacultyRepository facultyRepository;
+    //    private final FacultyRepository facultyRepository;
+    private final AvatarService avatarService;
 
-    public StudentService(StudentRepository studentRepository, FacultyRepository facultyRepository) {
+    public StudentService(StudentRepository studentRepository, AvatarService avatarService, FacultyRepository facultyRepository) {
         this.studentRepository = studentRepository;
+        this.avatarService = avatarService;
 //        this.facultyRepository = facultyRepository;
     }
 
@@ -33,14 +34,15 @@ public class StudentService {
 
     public void deleteStudent(Long id) {
         studentRepository.deleteById(id);
+        avatarService.deleteAvatarByStudentId(id);
     }
 
-    public Collection<Student> getAllStudentsByAge(Long age) {
+    public Student getAllStudentsByAge(Long age) {
         return studentRepository.findAllByAge(age);
     }
 
     public Collection<Student> findByAgeBetween(Long min, Long max) {
-        return studentRepository.findAllByAgeBetween(min, max);
+        return (Collection<Student>) studentRepository.findAllByAgeBetween(min, max);
     }
 
     public Collection<Student> findAllStudents() {
@@ -49,5 +51,17 @@ public class StudentService {
 
     public Faculty getStudentsFacultyByStudentsId(Long id) {
         return studentRepository.findById(id).get().getFaculty();
+    }
+
+    public Long getStudentsCount() {
+        return studentRepository.getStudentsCount();
+    }
+
+    public Long getStudentsAgeAvg() {
+        return studentRepository.getStudentsAgeAvg();
+    }
+
+    public Collection<Student> getLastTenStudents() {
+        return studentRepository.getLastTenStudents();
     }
 }

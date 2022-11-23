@@ -1,7 +1,7 @@
-package school.repository;
+package ru.hogwarts.school.repository;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
-import school.entity.Avatar;
+import ru.hogwarts.school.entity.Avatar;
 
 import java.util.Optional;
 

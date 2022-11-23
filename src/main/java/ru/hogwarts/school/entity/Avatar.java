@@ -1,5 +1,4 @@
-package school.entity;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
+package ru.hogwarts.school.entity;
 import javax.persistence.*;
 
 @Entity

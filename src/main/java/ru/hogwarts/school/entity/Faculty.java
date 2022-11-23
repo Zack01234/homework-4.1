@@ -1,7 +1,6 @@
-package school.entity;
+package ru.hogwarts.school.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
@@ -78,10 +77,10 @@ public class Faculty {
 
     @Override
     public String toString() {
-        return "Faculty{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", color='" + color + '\'' +
-                '}';
+        return "Факультет " +
+                "с id = " + id +
+                ", называется " + name + '\'' +
+                ", цвет которого" + color + '\'' +
+                ".";
     }
 }

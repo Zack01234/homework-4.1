@@ -10,21 +10,18 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import school.controller.FacultyController;
-import school.entity.Faculty;
-import school.repository.FacultyRepository;
-import school.service.FacultyService;
-
+import ru.hogwarts.school.controller.FacultyController;
+import ru.hogwarts.school.entity.Faculty;
+import ru.hogwarts.school.repository.FacultyRepository;
+import ru.hogwarts.school.service.FacultyService;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 
 @WebMvcTest(controllers = FacultyController.class)
 public class FacultyControllerTest {
@@ -45,8 +42,8 @@ public class FacultyControllerTest {
     public void testFaculty() throws Exception {
 
         Long facultyId = 1L;
-        String facultyName = "test_faculty_name";
-        String facultyColor = "test_faculty_color";
+        String facultyName = "Fac.test1";
+        String facultyColor = "Fac.color1";
 
         Faculty faculty = new Faculty();
         faculty.setId(facultyId);
@@ -55,7 +52,6 @@ public class FacultyControllerTest {
 
         JSONObject facultyObject = new JSONObject();
         facultyObject.put("name", facultyName);
-
         when(facultyRepository.findById(any(Long.class))).thenReturn(Optional.of(faculty));
         when(facultyRepository.getAllFacultiesByColorOrName(anyString(), anyString())).thenReturn((List<Faculty>) Collections.singleton(faculty));
         when(facultyRepository.save(any(Faculty.class))).thenReturn(faculty);
@@ -65,7 +61,6 @@ public class FacultyControllerTest {
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value(facultyName));
-
 
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/faculty?color=" + facultyColor)

@@ -1,13 +1,12 @@
-package school.service;
+package ru.hogwarts.school.service;
 
-import lombok.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import school.entity.Avatar;
-import school.entity.Student;
-import school.repository.AvatarRepository;
-import school.repository.StudentRepository;
+import ru.hogwarts.school.entity.Student;
+import ru.hogwarts.school.repository.AvatarRepository;
+import ru.hogwarts.school.repository.StudentRepository;
+import ru.hogwarts.school.entity.Avatar;
 
 import javax.transaction.Transactional;
 import java.io.*;
